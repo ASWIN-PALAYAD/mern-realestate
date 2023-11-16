@@ -1,7 +1,17 @@
 import express from 'express';
+import dbConnect from './config/dbConnect.js';
 
 const app = express();
 
-app.listen(3000,()=> {
-    console.log('server is running on port  3000');
+
+
+
+
+
+//create server
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT,()=> {
+    dbConnect();
+    console.log(`server is running on port  ${PORT}`);
 });
