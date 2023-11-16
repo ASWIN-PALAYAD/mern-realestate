@@ -1,9 +1,9 @@
 import express from 'express';
 import { test } from '../controllers/userController.js';
 
-const UserRouter = express.Router();
+const userRouter = express.Router();
 
-UserRouter.get('/test',test)
+userRouter.get('/test',test)
 
 
-export default UserRouter;
+export default userRouter;

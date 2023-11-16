@@ -1,14 +1,18 @@
 import express from 'express';
 import dbConnect from './config/dbConnect.js';
-import UserRouter from './routes/userRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import authRouter from './routes/authRoutes.js';
 
 const app = express();
 
 
+app.use(express.json());
+
+
 
 //routes
-app.use('/api/user',UserRouter);
-
+app.use('/api/user',userRouter);
+app.use('/api/auth',authRouter);
 
 
 
