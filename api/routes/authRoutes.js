@@ -6,4 +6,4 @@ const authRouter = express.Router();
 authRouter.post('/signup',signup);
 
 
-export default authRouter;
+export default authRouter; 
