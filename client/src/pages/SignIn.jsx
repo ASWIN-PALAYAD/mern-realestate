@@ -31,9 +31,7 @@ const SignIn = () => {
     try {
       dispatch(signInStart());
       const res = await axios.post("/api/auth/signin", { ...formData });
-      console.log(res);
       const data = res?.data;
-      console.log(data);
       if (data?.success === false) {
         dispatch(signInFailure(data?.message));
         return;
