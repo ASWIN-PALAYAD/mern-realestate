@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { signInFailure,signInStart,signInSuccess } from "../redux/slices/user/userSlice";
 
 
 const SignIn = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  
+  const {loading,error} = useSelector((state)=>state.user)
 
   const handleChange = (e) => {
     setFormData({
@@ -26,23 +29,22 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await axios.post("/api/auth/signin", { ...formData });
       console.log(res);
       const data = res?.data;
       console.log(data);
       if (data?.success === false) {
-        setError(data?.message);
-        setLoading(false);
+        dispatch(signInFailure(data?.message));
         return;
       }
-      setError(null);
-      setLoading(false);
+      dispatch(signInSuccess(data))
       navigate('/');
     } catch (error) {
       console.log(error?.response?.data?.message);
-      setLoading(false);
-      setError(error?.response?.data?.message);
+      // setLoading(false);
+      // setError(error?.response?.data?.message);
+      dispatch(signInFailure(error?.response?.data?.message))
     }
   };
 
@@ -54,7 +56,7 @@ const SignIn = () => {
         
         <input
           type="email"
-          placeholder="email"
+          placeholder="emails"
           className="border p-3 rounded-t-lg"
           id="email"
           onChange={handleChange}
@@ -85,3 +87,10 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+
+
+
+
+
+
