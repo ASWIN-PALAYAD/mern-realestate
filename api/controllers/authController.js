@@ -56,7 +56,7 @@ export const signin = async (req, res, next) => {
         expires: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
       })
       .status(200)
-      .json(userDetails);
+      .json({message:"logged in successfully",userDetails});
   } catch (error) {
     next(error);
   }
