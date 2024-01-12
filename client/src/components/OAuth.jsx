@@ -12,7 +12,7 @@ const OAuth = () => {
     const dispatch =  useDispatch();
     const navigate = useNavigate();
 
-    const handleGoogleClick = async() => {
+    const handleGoogleClick = async() => { 
         try {
             const provider = new GoogleAuthProvider()
             const auth = getAuth(app);
@@ -22,10 +22,10 @@ const OAuth = () => {
                 email:result?.user?.email,
                 photo:result?.user?.photoURL
             });
-            const data = res?.data;
+            const data = await res?.data;
             dispatch(signInSuccess(data))
             navigate('/');
-
+ 
         } catch (error) {
             console.log("could not sign in with google",error);
 
