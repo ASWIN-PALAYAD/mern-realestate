@@ -4,6 +4,7 @@ import userRouter from './routes/userRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import listingRouter from './routes/listingRoutes.js';
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(cookieParser());
 //routes
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
+app.use('/api/listing',listingRouter);
 
 
 //middleware
