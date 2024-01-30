@@ -3,13 +3,14 @@ import dbConnect from './config/dbConnect.js';
 import userRouter from './routes/userRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors());
 
 
 app.use(express.json());
-
+app.use(cookieParser());
 
 
 //routes
