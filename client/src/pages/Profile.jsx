@@ -6,6 +6,7 @@ import { app } from "../firebase";
 import { updateUserStart,updateUserSuccess,updateUserFail, deleteUserStart, deleteUserFail, deleteUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFail } from "../redux/slices/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
 
@@ -138,6 +139,9 @@ const Profile = () => {
         >
           {loading ? 'loading...' : 'update'}
         </button>
+        <Link className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-90%" to={"/create-listing"}>
+            Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer font-bold">Delete account</span>
