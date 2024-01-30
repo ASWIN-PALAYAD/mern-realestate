@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from "../firebase";
-import { updateUserStart,updateUserSuccess,updateUserFail } from "../redux/slices/user/userSlice.js";
+import { updateUserStart,updateUserSuccess,updateUserFail, deleteUserStart, deleteUserFail, deleteUserSuccess } from "../redux/slices/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -72,6 +72,21 @@ const Profile = () => {
     }
   }
 
+  const handleDeleteUser = async() => {
+    try {
+      dispatch(deleteUserStart());
+      const {data} = await axios.delete(`/api/user/delete/${currentUser._id}`);
+      if(data?.success === false) {
+        dispatch(deleteUserFail(data?.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data))
+
+    } catch (error) {
+      dispatch(deleteUserFail(error.response.data.message))
+    }
+  }
+ 
 
   return (
     <div className="p-3 max-w-lg mx-auto" onSubmit={handleSubmit}>
@@ -109,7 +124,7 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-5">
-        <span className="text-red-700 cursor-pointer font-bold">Delete account</span>
+        <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer font-bold">Delete account</span>
         <span className="text-red-700 cursor-pointer font-bold">Sign out</span>
       </div>
       <p className="text-green-700 mt-5 text-center" >{updateSuccess ? "Successfully updated" : ''}</p>
