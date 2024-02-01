@@ -10,6 +10,7 @@ const Search = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [listing, setListing] = useState([]);
+    const [showMore, setShowMore] = useState(false);
     const [sideBarData, setSideBarData] = useState({
         searchTerm: '',
         type:'all',
@@ -19,8 +20,8 @@ const Search = () => {
         sort:'created_at',
         order:'desc'
     });
-
     console.log(listing);
+
 
     useEffect(()=>{
         const urlParams = new URLSearchParams(location.search);
@@ -50,8 +51,14 @@ const Search = () => {
 
         const fetcListing = async() => {
             setLoading(true);
+            setShowMore(false)
             const searchQuery = urlParams.toString();
             const {data} = await axios.get(`/api/listing/get?${searchQuery}`);
+            if(data?.length >8){
+                setShowMore(true);
+            }else{
+                setShowMore(false)
+            }
             setListing(data);
             setLoading(false);
         }
@@ -94,6 +101,19 @@ const Search = () => {
 
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
+    }
+
+    const onShowMoreClick = async() => {
+        const numberOfListing = listing.length;
+        const startIndex = numberOfListing;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex',startIndex);
+        const searchQuery = urlParams.toString();
+        const {data} = await axios.get(`/api/listing/get?${searchQuery}`);
+        if(data?.length < 9){
+            setShowMore(false);
+        }
+        setListing([...listing, ...data]);
     }
 
   return (
@@ -190,9 +210,16 @@ const Search = () => {
                 {loading && (
                     <p className="text-xl text-slate-700 text-center w-full">Loading...</p>
                 )}
-                {!loading && listing && listing.map((listing)=> (
+                {!loading && listing && listing?.map((listing)=> (
                     <ListingItem key={listing._id} listing={listing}/>
                 ))}
+
+                {showMore && (
+                    <button onClick={onShowMoreClick} className="text-green-700 font-semibold hover:underline p-3
+                    text-center w-full" >
+                        Show more
+                    </button>
+                )}
             </div>
         </div>
     </div>
