@@ -105,7 +105,7 @@ export const getAllListings = async(req,res,next) => {
             {[sort]:order}
         ).limit(limit).skip(startIndex);
 
-        return res.status(200).json(listing);
+        return res.status(200).json(listing);   
          
         
     } catch (error) {
