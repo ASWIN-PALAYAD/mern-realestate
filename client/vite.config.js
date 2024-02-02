@@ -6,7 +6,7 @@ export default defineConfig({
   server : {
     proxy:{
       '/api':{
-        target:'https://mern-realestate-theta.vercel.app/'
+        target:'https://mern-realestate-theta.vercel.app'
       }
     }
   },
