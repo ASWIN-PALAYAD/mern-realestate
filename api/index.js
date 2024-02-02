@@ -7,7 +7,11 @@ import cookieParser from 'cookie-parser';
 import listingRouter from './routes/listingRoutes.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'https://myproperty.vercel.app/',
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 
 app.use(express.json());
