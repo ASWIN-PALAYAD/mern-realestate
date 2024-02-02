@@ -17,9 +17,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/',(req,res)=>{
-    res.send('welcome')
-    })
+// app.use('/',(req,res)=>{
+//     res.send('welcome')
+//     })
 
 
 //routes
